@@ -84,3 +84,22 @@ colnames(X_Merged) <- c(gsub("-","_",gsub("\\(\\)","",filtered_features[["featur
 #
 
 # Second exercise
+# Extract the columns that include only the mean. This can be done filtering the column names
+columns <- subset(colnames(X_Merged), grepl("_mean",colnames(X_Merged)))
+
+# Storing then the filtered data in a new dataframe
+tmp <- cbind(X_Merged[columns], X_Merged["activity"])
+
+# Renaming the column names of the dataframes of the subjects with something more meaninful
+colnames(subject_test) <- c("subject_id")
+colnames(subject_train) <- c("subject_id")
+
+subject <- rbind(subject_test, subject_train)
+
+# Merging the subject dataframe with the x dataframe
+X_Merged_Mean_And_Subjects <- cbind(tmp, subject)
+
+# Saving the second tidy dataset as csv file
+write.csv(file = "dataset_2.csv", x = X_Merged_Mean_And_Subjects)
+
+# Adding an extra column now with id of each subject
