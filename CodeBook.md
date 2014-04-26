@@ -18,7 +18,7 @@ The set of variables that were estimated from these signals are:
 * std: Standard deviation
 * meanFreq: Weighted average of the frequency components to obtain a mean frequency
 
-the acceleration signal is separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+The acceleration signal is separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 * tBodyAcc_mean_X
 * tBodyAcc_mean_Y
 * tBodyAcc_mean_Z
@@ -108,9 +108,9 @@ Finally a Fast Fourier Transform (FFT) was applied to some of these signals prod
 These signals were used to estimate variables of the feature vector for each pattern:  
 '_XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-The activity can take any of the following 6 values:
-
 #### Categorical variables
+
+The activity can take any of the following 6 values:
 
 activity
 
@@ -152,5 +152,143 @@ The resulting training and test sets, where merged, conserving the columns
 
 For convience the names of the columns were modified, eliminating the "()" and the "-" 
 
+### ================================================================================================
 ### dataset_2.csv
 
+The set of variables that were estimated from these signals are: 
+
+* mean(): Mean value
+* std(): Standard deviation
+* mad(): Median absolute deviation 
+* max(): Largest value in array
+* min(): Smallest value in array
+* sma(): Signal magnitude area
+* energy(): Energy measure. Sum of the squares divided by the number of values. 
+* iqr(): Interquartile range 
+* entropy(): Signal entropy
+* arCoeff(): Autorregresion coefficients with Burg order equal to 4
+* correlation(): correlation coefficient between two signals
+* maxInds(): index of the frequency component with largest magnitude
+* meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+* skewness(): skewness of the frequency domain signal 
+* kurtosis(): kurtosis of the frequency domain signal 
+* bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+* angle(): Angle between to vectors.
+
+The acceleration signal is separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+* tBodyAcc-mean-X
+* tBodyAcc-mean-Y
+* tBodyAcc-mean-Z
+* tBodyAcc-std-X
+* tBodyAcc-std-Y
+* tBodyAcc-std-Z
+* tGravityAcc-mean-X
+* tGravityAcc-mean-Y
+* tGravityAcc-mean-Z
+* tGravityAcc-std-X
+* tGravityAcc-std-Y
+* tGravityAcc-std-Z
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+* tBodyAccJerk-mean-X
+* tBodyAccJerk-mean-Y
+* tBodyAccJerk-mean-Z
+* tBodyAccJerk-std-X
+* tBodyAccJerk-std-Y
+* tBodyAccJerk-std-Z
+* tBodyGyro-mean-X
+* tBodyGyro-mean-Y
+* tBodyGyro-mean-Z
+* tBodyGyro-std-X
+* tBodyGyro-std-Y
+* tBodyGyro-std-Z
+* tBodyGyroJerk-mean-X
+* tBodyGyroJerk-mean-Y
+* tBodyGyroJerk-mean-Z
+* tBodyGyroJerk-std-X
+* tBodyGyroJerk-std-Y
+* tBodyGyroJerk-std-Z
+* tBodyAccMag-mean
+* tBodyAccMag-std
+* tGravityAccMag-mean
+* tGravityAccMag-std
+* tBodyAccJerkMag-mean
+* tBodyAccJerkMag-std
+* tBodyGyroMag-mean
+* tBodyGyroMag-std
+* tBodyGyroJerkMag-mean
+* tBodyGyroJerkMag-std
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+* fBodyAcc-mean-X
+* fBodyAcc-mean-Y
+* fBodyAcc-mean-Z
+* fBodyAcc-std-X
+* fBodyAcc-std-Y
+* fBodyAcc-std-Z
+* fBodyAcc-meanFreq-X
+* fBodyAcc-meanFreq-Y
+* fBodyAcc-meanFreq-Z
+* fBodyAccJerk-mean-X
+* fBodyAccJerk-mean-Y
+* fBodyAccJerk-mean-Z
+* fBodyAccJerk-std-X
+* fBodyAccJerk-std-Y
+* fBodyAccJerk-std-Z
+* fBodyAccJerk-meanFreq-X
+* fBodyAccJerk-meanFreq-Y
+* fBodyAccJerk-meanFreq-Z
+* fBodyGyro-mean-X
+* fBodyGyro-mean-Y
+* fBodyGyro-mean-Z
+* fBodyGyro-std-X
+* fBodyGyro-std-Y
+* fBodyGyro-std-Z
+* fBodyGyro-meanFreq-X
+* fBodyGyro-meanFreq-Y
+* fBodyGyro-meanFreq-Z
+* fBodyAccMag-mean
+* fBodyAccMag-std
+* fBodyAccMag-meanFreq
+* fBodyBodyAccJerkMag-mean
+* fBodyBodyAccJerkMag-std
+* fBodyBodyAccJerkMag-meanFreq
+* fBodyBodyGyroMag-mean
+* fBodyBodyGyroMag-std
+* fBodyBodyGyroMag-meanFreq
+* fBodyBodyGyroJerkMag-mean
+* fBodyBodyGyroJerkMag-std
+* fBodyBodyGyroJerkMag-meanFreq
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'_XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+Additionally, subject_id, with a value from 1 to 30, representing the subjects were the samples were measured
+
+#### Categorical variables
+
+The activity can take any of the following 6 values:
+
+activity
+
+* WALKING
+* WALKING_UPSTAIRS
+* WALKING_DOWNSTAIRS
+* SITTING
+* STANDING
+* LAYING
+
+### Procedure
+
+The script run_analysis, reads the following files from "UCI HAR Dataset" and generates the output.
+Essentially the script goes through the following steps:
+
+After creating the previous dataset the subject data frame gets meaninful column names (subject_id)
+X_Test, y_test, subject_test, get merged in one data set keeping the number of columns
+X_Train, y_train, subject_train, get merged in one data set keeping the number of columns
+The Test and Train data sets previously obtained are now merged
+An aggregation is executed, that calculates the average (mean) of all variables grouping by subject_id and activity.
+The labels are now renamed after the features.txt file located in the "UCI HAR Dataset" directory
+The new tidy data set is saved as dataset_2.csv

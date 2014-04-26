@@ -4,33 +4,24 @@
 # First exercise
 
 # Loading the test dataset
-loadTestData <- function(){
-    X_Test <- read.table("UCI HAR Dataset/test/X_test.txt", header = FALSE)
-    y_Test <- read.table("UCI HAR Dataset/test/y_test.txt", header = FALSE)
-    subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", header = FALSE)
-}
+X_Test <- read.table("UCI HAR Dataset/test/X_test.txt", header = FALSE)
+y_Test <- read.table("UCI HAR Dataset/test/y_test.txt", header = FALSE)
+subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", header = FALSE)
+
 
 # Loading the train dataset
-loadTrainData <- function(){
-    X_Train <- read.table("UCI HAR Dataset/train/X_train.txt", header = FALSE)
-    y_Train <- read.table("UCI HAR Dataset/train/y_train.txt", header = FALSE)
-    subject_train <- read.table("UCI HAR Dataset/train//subject_train.txt", header = FALSE)
-}
+X_Train <- read.table("UCI HAR Dataset/train/X_train.txt", header = FALSE)
+y_Train <- read.table("UCI HAR Dataset/train/y_train.txt", header = FALSE)
+subject_train <- read.table("UCI HAR Dataset/train//subject_train.txt", header = FALSE)
+
 
 # Loading activities labels
-loadActivityLabels <- function(){
-    activities_labels <- read.table("UCI HAR Dataset/activity_labels.txt")    
-    colnames(activities_labels) <- c("indices","activity_name")
-    
-    activities_labels
-}
+activities_labels <- read.table("UCI HAR Dataset/activity_labels.txt")    
+colnames(activities_labels) <- c("indices","activity_name")
+
 
 # Loading the features names
-readFeatureNames <- function(){
-    features_names <- read.table("UCI HAR Dataset/features.txt")    
-    
-    features_names
-}
+features_names <- read.table("UCI HAR Dataset/features.txt")    
 
 # Combining the two datasets after being filtered
 mergeDataSets <- function(){
@@ -77,29 +68,34 @@ X_Merged$activity <- factor(X_Merged$activity,
 colnames(X_Merged) <- c(gsub("-","_",gsub("\\(\\)","",filtered_features[["feature_name"]])),"activity")
 
 # Save the tidy dataset as csv file
-#write.csv(file = "dataset_1.csv", x = X_Merged)
+write.csv(file = "dataset_1.csv", x = X_Merged)
 
 #
 # ------------------------------------------------------------------------------------------
 #
 
 # Second exercise
-# Extract the columns that include only the mean. This can be done filtering the column names
-columns <- subset(colnames(X_Merged), grepl("_mean",colnames(X_Merged)))
-
-# Storing then the filtered data in a new dataframe
-tmp <- cbind(X_Merged[columns], X_Merged["activity"])
 
 # Renaming the column names of the dataframes of the subjects with something more meaninful
 colnames(subject_test) <- c("subject_id")
 colnames(subject_train) <- c("subject_id")
 
-subject <- rbind(subject_test, subject_train)
+# Merging in one data frame the X, y and subject data for the test data set
+Merged_X_Test <- cbind(X_Test, y_Test, subject_test)
 
-# Merging the subject dataframe with the x dataframe
-X_Merged_Mean_And_Subjects <- cbind(tmp, subject)
+# Merging in one data frame the X, y and subject data for the train data set
+Merged_X_Train <- cbind(X_Train, y_Train, subject_train)
 
-# Saving the second tidy dataset as csv file
-write.csv(file = "dataset_2.csv", x = X_Merged_Mean_And_Subjects)
+# Merging in a single data frame the training and the test data set
+Merged_Total <- rbind(Merged_X_Test, Merged_X_Train)
 
-# Adding an extra column now with id of each subject
+# Aggregating all the variables grouped by activity and subject_id
+second_result <- aggregate(Merged_Total[,1:561],by=list(Merged_Total$activity, Merged_Total$subject_id), mean)
+
+
+# Renaming the rest of the columns
+colnames(second_result) <- c("activity","subject_id",as.character(features_names[["feature_name"]]))
+
+write.csv(file = "dataset_2.csv", x = second_result)
+
+
